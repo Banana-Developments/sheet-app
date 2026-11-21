@@ -1,4 +1,4 @@
-const CACHE_NAME = "sheet-app-cache-v1";
+const CACHE_NAME = "sheet-app-cache-v2";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", event => {
@@ -9,7 +9,7 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
-  // Запросы к Google Apps Script не кэшируем, кэшируем только файлы самого приложения
+  // Г‡Г ГЇГ°Г®Г±Г» ГЄ Google Apps Script Г­ГҐ ГЄГЅГёГЁГ°ГіГҐГ¬, ГЄГЅГёГЁГ°ГіГҐГ¬ ГІГ®Г«ГјГЄГ® ГґГ Г©Г«Г» Г±Г Г¬Г®ГЈГ® ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї
   if (event.request.url.includes("://google.com")) return;
 
   event.respondWith(
