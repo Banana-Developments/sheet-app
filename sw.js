@@ -9,7 +9,7 @@ self.addEventListener("install", event => {
 });
 
 self.addEventListener("fetch", event => {
-  // Çàïðîñû ê Google Apps Script íå êýøèðóåì, êýøèðóåì òîëüêî ôàéëû ñàìîãî ïðèëîæåíèÿ
+  // Запросы к Google Apps Script не кэшируем, кэшируем только файлы самого приложения
   if (event.request.url.includes("://google.com")) return;
 
   event.respondWith(
