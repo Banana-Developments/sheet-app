@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#1a73e8">
   <link rel="manifest" href="manifest.json">
-  <title>Учёт данных</title>
+  <title>РЈС‡С‘С‚ РґР°РЅРЅС‹С…</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 460px; margin: 0 auto; padding: 16px; background: #f8f9fa; color: #202124; }
     h2 { margin-top: 0; font-size: 20px; }
@@ -24,39 +24,39 @@
 </head>
 <body>
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2>Новая запись</h2>
-    <span id="net-badge" class="badge online">Онлайн</span>
+    <h2>РќРѕРІР°СЏ Р·Р°РїРёСЃСЊ</h2>
+    <span id="net-badge" class="badge online">РћРЅР»Р°Р№РЅ</span>
   </div>
 
-  <label for="item">Позиция из справочника</label>
+  <label for="item">РџРѕР·РёС†РёСЏ РёР· СЃРїСЂР°РІРѕС‡РЅРёРєР°</label>
   <select id="item">
-    <option value="">Загрузка списка...</option>
+    <option value="">Р—Р°РіСЂСѓР·РєР° СЃРїРёСЃРєР°...</option>
   </select>
 
-  <label for="amount">Количество / число</label>
-  <input type="number" id="amount" step="any" inputmode="decimal" placeholder="Например: 15.5">
+  <label for="amount">РљРѕР»РёС‡РµСЃС‚РІРѕ / С‡РёСЃР»Рѕ</label>
+  <input type="number" id="amount" step="any" inputmode="decimal" placeholder="РќР°РїСЂРёРјРµСЂ: 15.5">
 
-  <label for="comment">Комментарий (необязательно)</label>
-  <input type="text" id="comment" placeholder="Примечание">
+  <label for="comment">РљРѕРјРјРµРЅС‚Р°СЂРёР№ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ)</label>
+  <input type="text" id="comment" placeholder="РџСЂРёРјРµС‡Р°РЅРёРµ">
 
-  <button onclick="saveAndSend()">Сохранить и отправить</button>
+  <button onclick="saveAndSend()">РЎРѕС…СЂР°РЅРёС‚СЊ Рё РѕС‚РїСЂР°РІРёС‚СЊ</button>
 
   <div class="row">
-    <button class="secondary" onclick="syncQueue()">Доотправить (<span id="queue-count">0</span>)</button>
-    <button class="secondary" onclick="loadCatalog(true)">Обновить список</button>
+    <button class="secondary" onclick="syncQueue()">Р”РѕРѕС‚РїСЂР°РІРёС‚СЊ (<span id="queue-count">0</span>)</button>
+    <button class="secondary" onclick="loadCatalog(true)">РћР±РЅРѕРІРёС‚СЊ СЃРїРёСЃРѕРє</button>
   </div>
 
-  <div class="status" id="status">Готово к работе.</div>
+  <div class="status" id="status">Р“РѕС‚РѕРІРѕ Рє СЂР°Р±РѕС‚Рµ.</div>
 
   <script>
-    // ВСТАВЬТЕ ВАШ URL НИЖЕ:
+    // Р’РЎРўРђР’Р¬РўР• Р’РђРЁ URL РќРР–Р•:
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzI6_UvIu5PDdWP3y3B-QFMSrmkZeALEJkqdBXJToHSM5dcLjYlPCwuF1o1wB-7T6Og/exec";
     const TOKEN = "12345";
 
     const QUEUE_KEY = "sheet_app_queue_v1";
     const CATALOG_KEY = "sheet_app_catalog_v1";
 
-    // Генератор уникального ID для защиты от дублей
+    // Р“РµРЅРµСЂР°С‚РѕСЂ СѓРЅРёРєР°Р»СЊРЅРѕРіРѕ ID РґР»СЏ Р·Р°С‰РёС‚С‹ РѕС‚ РґСѓР±Р»РµР№
     function generateId() {
       return Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 9);
     }
@@ -68,22 +68,22 @@
     function updateNetBadge() {
       const badge = document.getElementById("net-badge");
       if (navigator.onLine) {
-        badge.textContent = "Онлайн";
+        badge.textContent = "РћРЅР»Р°Р№РЅ";
         badge.className = "badge online";
       } else {
-        badge.textContent = "Офлайн";
+        badge.textContent = "РћС„Р»Р°Р№РЅ";
         badge.className = "badge offline";
       }
     }
 
-    // Работа со справочником (выпадающий список)
+    // Р Р°Р±РѕС‚Р° СЃРѕ СЃРїСЂР°РІРѕС‡РЅРёРєРѕРј (РІС‹РїР°РґР°СЋС‰РёР№ СЃРїРёСЃРѕРє)
     function renderCatalog(items) {
       const select = document.getElementById("item");
       const currentVal = select.value;
       select.innerHTML = "";
 
       if (!items || items.length === 0) {
-        select.innerHTML = '<option value="">Список пуст (нажмите «Обновить список»)</option>';
+        select.innerHTML = '<option value="">РЎРїРёСЃРѕРє РїСѓСЃС‚ (РЅР°Р¶РјРёС‚Рµ В«РћР±РЅРѕРІРёС‚СЊ СЃРїРёСЃРѕРєВ»)</option>';
         return;
       }
 
@@ -98,16 +98,16 @@
     }
 
     async function loadCatalog(manual = false) {
-      // Сначала сразу рисуем из кэша телефона (работает без интернета)
+      // РЎРЅР°С‡Р°Р»Р° СЃСЂР°Р·Сѓ СЂРёСЃСѓРµРј РёР· РєСЌС€Р° С‚РµР»РµС„РѕРЅР° (СЂР°Р±РѕС‚Р°РµС‚ Р±РµР· РёРЅС‚РµСЂРЅРµС‚Р°)
       const cached = JSON.parse(localStorage.getItem(CATALOG_KEY) || "[]");
       if (cached.length > 0) renderCatalog(cached);
 
       if (!navigator.onLine) {
-        if (manual) setStatus("Нет интернета. Используется сохранённый список.");
+        if (manual) setStatus("РќРµС‚ РёРЅС‚РµСЂРЅРµС‚Р°. РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ СЃРѕС…СЂР°РЅС‘РЅРЅС‹Р№ СЃРїРёСЃРѕРє.");
         return;
       }
 
-      if (manual) setStatus("Обновляем справочник из таблицы...");
+      if (manual) setStatus("РћР±РЅРѕРІР»СЏРµРј СЃРїСЂР°РІРѕС‡РЅРёРє РёР· С‚Р°Р±Р»РёС†С‹...");
       try {
         const url = `${SCRIPT_URL}?token=${encodeURIComponent(TOKEN)}`;
         const res = await fetch(url);
@@ -115,16 +115,16 @@
         if (data.status === "ok" && Array.isArray(data.items)) {
           localStorage.setItem(CATALOG_KEY, JSON.stringify(data.items));
           renderCatalog(data.items);
-          if (manual) setStatus(`Справочник обновлён (${data.items.length} поз.).`);
+          if (manual) setStatus(`РЎРїСЂР°РІРѕС‡РЅРёРє РѕР±РЅРѕРІР»С‘РЅ (${data.items.length} РїРѕР·.).`);
         } else if (manual) {
-          setStatus("Ошибка обновления списка: проверьте токен и URL.");
+          setStatus("РћС€РёР±РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ СЃРїРёСЃРєР°: РїСЂРѕРІРµСЂСЊС‚Рµ С‚РѕРєРµРЅ Рё URL.");
         }
       } catch (e) {
-        if (manual) setStatus("Не удалось загрузить справочник (ошибка сети).");
+        if (manual) setStatus("РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ СЃРїСЂР°РІРѕС‡РЅРёРє (РѕС€РёР±РєР° СЃРµС‚Рё).");
       }
     }
 
-    // Работа с очередью отправки
+    // Р Р°Р±РѕС‚Р° СЃ РѕС‡РµСЂРµРґСЊСЋ РѕС‚РїСЂР°РІРєРё
     function getQueue() {
       return JSON.parse(localStorage.getItem(QUEUE_KEY) || "[]");
     }
@@ -140,11 +140,11 @@
       const comment = document.getElementById("comment").value.trim();
 
       if (!item) {
-        setStatus("Выберите позицию из списка.");
+        setStatus("Р’С‹Р±РµСЂРёС‚Рµ РїРѕР·РёС†РёСЋ РёР· СЃРїРёСЃРєР°.");
         return;
       }
       if (amount === "") {
-        setStatus("Введите число.");
+        setStatus("Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ.");
         return;
       }
 
@@ -163,7 +163,7 @@
 
       document.getElementById("amount").value = "";
       document.getElementById("comment").value = "";
-      setStatus("Запись сохранена в память телефона...");
+      setStatus("Р—Р°РїРёСЃСЊ СЃРѕС…СЂР°РЅРµРЅР° РІ РїР°РјСЏС‚СЊ С‚РµР»РµС„РѕРЅР°...");
       syncQueue();
     }
 
@@ -172,16 +172,16 @@
       if (isSyncing) return;
       const queue = getQueue();
       if (queue.length === 0) {
-        setStatus("Все записи отправлены.");
+        setStatus("Р’СЃРµ Р·Р°РїРёСЃРё РѕС‚РїСЂР°РІР»РµРЅС‹.");
         return;
       }
       if (!navigator.onLine) {
-        setStatus(`Нет сети. В очереди на отправку: ${queue.length} шт.`);
+        setStatus(`РќРµС‚ СЃРµС‚Рё. Р’ РѕС‡РµСЂРµРґРё РЅР° РѕС‚РїСЂР°РІРєСѓ: ${queue.length} С€С‚.`);
         return;
       }
 
       isSyncing = true;
-      setStatus(`Отправка в таблицу (${queue.length} шт.)...`);
+      setStatus(`РћС‚РїСЂР°РІРєР° РІ С‚Р°Р±Р»РёС†Сѓ (${queue.length} С€С‚.)...`);
       const remaining = [];
 
       for (const record of queue) {
@@ -202,13 +202,13 @@
       isSyncing = false;
 
       if (remaining.length === 0) {
-        setStatus("Успешно отправлено в Google Таблицу!");
+        setStatus("РЈСЃРїРµС€РЅРѕ РѕС‚РїСЂР°РІР»РµРЅРѕ РІ Google РўР°Р±Р»РёС†Сѓ!");
       } else {
-        setStatus(`Не удалось отправить: ${remaining.length} шт. Остались в очереди.`);
+        setStatus(`РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РїСЂР°РІРёС‚СЊ: ${remaining.length} С€С‚. РћСЃС‚Р°Р»РёСЃСЊ РІ РѕС‡РµСЂРµРґРё.`);
       }
     }
 
-    // Регистрация Service Worker для офлайн-открытия страницы
+    // Р РµРіРёСЃС‚СЂР°С†РёСЏ Service Worker РґР»СЏ РѕС„Р»Р°Р№РЅ-РѕС‚РєСЂС‹С‚РёСЏ СЃС‚СЂР°РЅРёС†С‹
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
